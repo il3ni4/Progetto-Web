@@ -8,5 +8,6 @@ Single Page Application nel quale, dopo il login, è possibile inserire delle ri
   2.3 in alto: Ciao Utente 
   2.4 tasto: nuova ricetta 
     2.4.1 interfaccia creazione ricetta: Nome ricetta, Ingredienti, Procedimento, Categoria + button "pubblica ricetta"
+    ciao
 ## Fasi del progetto
 ## Suddivisione del lavoro 
