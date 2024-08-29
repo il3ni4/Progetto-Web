@@ -1,16 +1,18 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const dotenv = require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+
+mongoose.connect(process.env.MONGO_URL);
+const db = mongoose.connection;
+db.once("open", () => {console.log("Database connesso con successo")});
 
 app.get('/', (req, res) => {
     res.send('questo è il backend');
 });
 
-app.listen(PORT, () => {
-    console.log("server avviato su porta ${PORT}");
-});
+app.listen(process.env.PORT, () => {console.log("Server avviato su porta " + process.env.PORT);});
 
