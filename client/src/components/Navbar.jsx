@@ -11,13 +11,27 @@ import Sidebar from './Sidebar';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link, useLocation } from 'react-router-dom';
-import { Grid2 } from '@mui/material';
+import { Grid2, MenuItem, Menu} from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from 'axios';
+import { useTheme, useMediaQuery } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
+
+
+
 
 
 function Navbar ({ setView }) {
   const location = useLocation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  //useMediaQuery: Usa il breakpoint per rilevare se lo schermo è sotto una certa larghezza (in questo caso
+  // il breakpoint è sm per schermi piccoli, come i telefoni).
+
+
 
 
   const [open, setOpen] = useState(false)
@@ -47,9 +61,69 @@ function Navbar ({ setView }) {
       setOpen(!open)
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget); //imposta lo stato con l'elemento che ha generato l'evento, ovvero ArrowDropDownIcon
+  }; //funzione che gestisce apertura menù a tendina per dispositivi mobile 
+
+  const handleMenuClose = () => {
+    setAnchorEl(null); //funzione che chiude menù a tendina, impostando lo stato su null
+  };
+
+  const mobileMenu = (
+    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose= {handleMenuClose}> 
+      <MenuItem  onClick ={handleMenuClose} component={Link} to="/home/myRecipes">
+      Home
+      </MenuItem>
+      <MenuItem component={Link} to="explore" onClick={handleMenuClose}>
+      Esplora
+      </MenuItem>
+      <MenuItem onClick={handleLogout}>
+      Logout
+      </MenuItem>
+      </Menu>
+  );
+  /*anchorEl={anchorEl} open={Boolean(anchorEl)} onClose= {handleMenuClose} colleghiamo il menu all'elemento di ancoraggio, se anchorEl è definito mostra il menu
+  e viene passata la funzione per chiudere il menu */
     return (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position='static'>
+        {isMobile? (
+          <>
+          <Box style = {{display: 'flex'}}>
+          <Toolbar>
+          <IconButton 
+            edge ='start' 
+            color ='inherit'
+            aria-label ='menu'
+            sx = {{mr:2}}
+            onClick ={toggleOpen}
+            >
+            <MenuIcon/>
+          </IconButton>
+          {location.pathname !== '/' && location.pathname !== '/signup'&& (
+            <Grid2 style = {{display : 'flex'}}>
+            <TextField
+            type="text"
+            variant="standard"
+            placeholder="Cerca una ricetta..."
+            value={searchQuery} //impostato il valore di input al valore attuale dello stato, se searchQuery cambia, il campo di input cambierà automaticamente
+            onChange={handleSearchChange}
+            sx={{backgroundColor: 'white'}}
+            />
+          <Button variant ="contained" color="primary" component={Link} to={`/searchRecipe?title=${searchQuery}`} onClick={handleSearchSubmit}><SearchIcon/></Button>
+          </Grid2>)}
+          </Toolbar>
+          {location.pathname !== '/' && location.pathname !== '/signup'&& (<Button color = "inherit">
+          {localStorage.getItem('darkMode') === 'true' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </Button>)}
+          {location.pathname !== '/' && location.pathname !== '/signup'&& (<IconButton edge = "end" color = "inherit" onClick={handleMenuClick} >
+          <ArrowDropDownIcon/>
+          </IconButton>)}
+          {mobileMenu}
+          </Box>
+          </>
+        ) : (
           <Toolbar>
           <IconButton 
             edge ='start' 
@@ -78,6 +152,7 @@ function Navbar ({ setView }) {
           </Grid2>)}
           {location.pathname!== '/' && location.pathname!== '/signup' && (<Button color="inherit" onClick={handleLogout}><LogoutIcon /></Button>)}
           </Toolbar>
+        )}
         </AppBar>
         <Sidebar isOpen={open} toggleOpen={toggleOpen} setView={setView}/>
         </Box>
