@@ -10,7 +10,7 @@ function Sidebar ({ isOpen, toggleOpen, setView }) {
 
 
 const categories = ['Vegetariano', 'Vegano', 'Carne', 'Pesce'];
-const types = ['Antipasti', 'Primo', 'Secondo', 'Lievitati', 'Dolci'];
+const types = ['Antipasti', 'Primi', 'Secondi', 'Lievitati', 'Dolci'];
 
 
 //handler quando si clicca su una categoria
@@ -32,7 +32,7 @@ const handleClickType = () => {
            <List>
             {categories.map((category)=>(
               <ListItem key={category}>
-                <ListItemButton component={Link} to={`/category/${category.toLowerCase()}`} onClick={handleClickCategory}>
+                <ListItemButton component={Link} to={`/category/${category}`} onClick={handleClickCategory}>
                     <ListItemText primary={category}/>
                 </ListItemButton>
                 </ListItem> 
@@ -42,7 +42,7 @@ const handleClickType = () => {
            <List>
             {types.map((type)=>(
               <ListItem key={type}>
-                <ListItemButton component={Link} to={`/type/${type.toLowerCase()}`} onClick={handleClickType} >
+                <ListItemButton component={Link} to={`/type/${type}`} onClick={handleClickType} >
                     <ListItemText primary={type}/>
                 </ListItemButton>
                 </ListItem> 

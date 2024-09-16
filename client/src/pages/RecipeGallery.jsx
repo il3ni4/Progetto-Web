@@ -8,6 +8,7 @@ import { useTheme } from '@mui/material/styles';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Link } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router-dom';
+import SearchOffIcon from '@mui/icons-material/SearchOff';
 
 
 function RecipeGallery({ view, setView }) {
@@ -44,6 +45,7 @@ useEffect(() => {
     }
     console.log("Response data:", response.data); 
     setRecipes(response.data.recipes)
+    
   }
   catch (err){
     if (err.status === 401){
@@ -64,6 +66,13 @@ if (loading) {
   return <div>Caricamento in corso...</div>; 
 }
 
+if (recipes.length === 0) {
+  return (
+  <div style={ {display:"flex", flexDirection:"column", justifyContent:"center", alignContent:"center", alignItems: "center"} }>
+    <p>Nessuna ricetta trovata</p>
+    <SearchOffIcon></SearchOffIcon>
+  </div>)
+}
 
   return (
     <Grid2 container spacing={5} justifyContent="center" style={{ marginTop: '30px' }}>
