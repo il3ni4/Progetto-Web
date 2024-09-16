@@ -2,6 +2,9 @@ import {React, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button} from '@mui/material';
 import axios from 'axios'
+import {Link} from'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 function Cards ({ key, recipe, setRecipes }) {
   
@@ -31,13 +34,27 @@ function Cards ({ key, recipe, setRecipes }) {
     }
   }
 
+  const handleDeleteRecipe = async (recipeId) => {
+    try{
+      const deleted = await axios.delete(`http://localhost:5000/home/recipe/${recipeId}`);
+      alert("Ricetta eliminata con successo");
+      setRecipes((prevRecipes) => prevRecipes.filter((recipe) => recipe._id !== recipeId));
+    } 
+    catch (err){
+        alert(err.response.data.msg);
+    }
+  }
+
+
  
     return (
         <Card sx={{ width: 330}}>
-            <CardActionArea>
+            <CardActionArea component={Link} to={`/recipe/${recipe._id}`}>
               <CardMedia
                 component="img"
                 height="140"
+                image={recipe.image}
+                alt={recipe.title}
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -54,6 +71,9 @@ function Cards ({ key, recipe, setRecipes }) {
               </Button>)}
               {location.pathname === '/savedRecipes' && (<Button onClick={() => handleRemoveSavedRecipe(recipe._id)} variant="outlined" size="medium">
                 Rimuovi
+              </Button>)}
+              {location.pathname === '/home/myRecipes' && (<Button variant="outlined" size="medium" onClick={() => handleDeleteRecipe(recipe._id)}>
+                <DeleteIcon />
               </Button>)}
             </CardActions>
           </Card>

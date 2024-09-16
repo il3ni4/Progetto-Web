@@ -1,46 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardMedia, CardContent, Typography, Box, List, ListItem, ListItemText, Divider, Container, Grid2} from '@mui/material';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CircleIcon from '@mui/icons-material/Circle';
 
-const recipe = {
-  title: "Pasta alla carbonazza",
-  ingredients: [
-    "100g pasta",
-    "2 uova",
-    "tanta panna",
-    "tanta pancetta",
-    "molta grana"
-  ],
-  people: 2,
-  steps: [
-    "prendi acqua",
-    "accendi fuoco",
-    "butta pasta"
-  ],
-  category: "Pesce",
-  type: "Primi",
-  cookingTime: 20,
-  user: {
-    "$oid": "66e08257f49d6c086eccdf87"
-  },
-  createdAt: {
-    $date: "2024-09-11T18:49:22.086Z"
-  },
-  updatedAt: {
-    $date: "2024-09-11T18:49:22.086Z"
-  },
-  __v: 0
-}
+
 
 const RecipeCard = () => {
+  const [recipe, setRecipe] = useState(null);
+  const {id} = useParams();
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try{
+        console.log(id);
+        const response = await axios.get(`http://localhost:5000/home/recipe/${id}`);
+      console.log("Response data:", response.data);
+      setRecipe(response.data.recipe);
+    }catch (err){
+      console.log("Errore nel caricamento della ricetta: ", err);
+    }
+  }
+  fetchRecipe();
+}, [id]);
+
+if(!recipe) return <div>Loading...</div>;
+
+
 return (
-  <Container maxWidth="md">
+  <Container maxWidth="md" sx={ {mt: 4, mb: 4} }>
     <Card>
+    <CardContent>
       <CardMedia
         component="img"
-        height="300"
+        height="500"
         image={recipe.image}
         alt={recipe.title}
+        sx={{ objectFit: 'contain',
+              objectPosition: 'left' 
+        }}
       />
+      </CardContent>
+      
 
   <Box sx={{
         display: 'flex',
@@ -52,7 +58,7 @@ return (
     {/* Durata */}
     <Grid2 container alignItems="center" spacing={1}>
         <Grid2 item>
-          {/*<AccessTimeIcon color="primary" />*/}
+          <AccessTimeFilledIcon color="primary" />
         </Grid2>
         <Grid2 item>
           <Typography variant="subtitle1" fontWeight="bold" color="primary">
@@ -60,29 +66,43 @@ return (
           </Typography>
         </Grid2>
         <Grid2 item>
-          <Typography variant="body1">{recipe.cookingTime}</Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{recipe.cookingTime} minuti</Typography>
         </Grid2>
     </Grid2>
+    </Box>
 
+    <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 2,
+        padding: 2
+      }}>
         {/* Numero Persone */}
         <Grid2 container alignItems="center" spacing={1}>
         <Grid2 item>
-          {/*<AccessTimeIcon color="primary" />*/}
+          <PeopleAltIcon color="primary" />
         </Grid2>
         <Grid2 item>
           <Typography variant="subtitle1" fontWeight="bold" color="primary">
-            NUMERO PERSONE:
+            DOSI PER:
           </Typography>
         </Grid2>
         <Grid2 item>
-          <Typography variant="body1">{recipe.people}</Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{recipe.people} persone</Typography>
         </Grid2>
     </Grid2>
+    </Box>
 
+    <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 2,
+        padding: 2
+      }}>
         {/* Categoria */}
         <Grid2 container alignItems="center" spacing={1}>
         <Grid2 item>
-          {/*<AccessTimeIcon color="primary" />*/}
+          <RestaurantIcon color="primary" />
         </Grid2>
         <Grid2 item>
           <Typography variant="subtitle1" fontWeight="bold" color="primary">
@@ -90,22 +110,29 @@ return (
           </Typography>
         </Grid2>
         <Grid2 item>
-          <Typography variant="body1">{recipe.category}</Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{recipe.category}</Typography>
         </Grid2>
     </Grid2>
+    </Box>
 
+    <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 2,
+        padding: 2
+      }}>
         {/* Tipo */}
         <Grid2 container alignItems="center" spacing={1}>
         <Grid2 item>
-          {/*<AccessTimeIcon color="primary" />*/}
+          <MenuBookIcon color="primary" />
         </Grid2>
         <Grid2 item>
           <Typography variant="subtitle1" fontWeight="bold" color="primary">
-            TIPO:
+            TIPOLOGIA:
           </Typography>
         </Grid2>
         <Grid2 item>
-          <Typography variant="body1">{recipe.type}</Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{recipe.type}</Typography>
         </Grid2>
     </Grid2>
     
@@ -122,11 +149,13 @@ return (
         <Divider />
         
         <Box mt={2}>
-          <Typography variant="h6">Ingredienti:</Typography>
+          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Ingredienti:</Typography>
           <List>
             {recipe.ingredients.map((ingredient, index) => (
               <ListItem key={index}>
-                <ListItemText primary={ingredient} />
+                  <CircleIcon sx={{ fontSize: 8, color: 'black', mr:1 }}/>
+                <ListItemText 
+                primary={ingredient} />
               </ListItem>
             ))}
           </List>
@@ -135,11 +164,14 @@ return (
         <Divider />
 
         <Box mt={2}>
-          <Typography variant="h6">Preparazione:</Typography>
+          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Preparazione:</Typography>
           <List>
             {recipe.steps.map((step, index) => (
               <ListItem key={index}>
-                <ListItemText primary={`${index + 1}. ${step}`} />
+                <Typography component="span" sx={{ fontWeight: 'bold', marginRight: 1 }}>
+              {index + 1}.
+            </Typography>
+            <ListItemText primary={step} />
               </ListItem>
             ))}
           </List>

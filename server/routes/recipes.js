@@ -13,11 +13,11 @@ router.get("/search?:query", verifyAuth, searchRecipe);
 
 router.get("/myRecipes", verifyAuth, getUserRecipes); 
 
-router.get("/recipe/:_id", verifyAuth, getRecipe); //da implementare nel frontend
+router.get("/recipe/:id", verifyAuth, getRecipe); //da implementare nel frontend
 
 router.post("/add", verifyAuth, createRecipe);
 
-router.delete("/recipe/:_id", verifyAuth, deleteRecipe);
+router.delete("/recipe/:id", verifyAuth, deleteRecipe);
 
 router.get("/type/:type", verifyAuth, getTypeRecipes);
 

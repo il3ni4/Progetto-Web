@@ -14,9 +14,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { Grid2 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from 'axios';
+import Brightness4Icon from '@mui/icons-material/Brightness4'; 
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 
-function Navbar ({ setView }) {
+function Navbar ({ setView, toggleDarkMode }) {
   const location = useLocation();
 
 
@@ -66,7 +68,11 @@ function Navbar ({ setView }) {
           {location.pathname !== '/main' && (<Button color="inherit" component={Link} to={`/home/myRecipes`} onClick={() => setView('myRecipes')}>Home</Button>)}
           <Button color="inherit" component={Link} to="/explore" onClick={() => setView('allRecipes')}>Esplora</Button>
           {location.pathname !== '/' && location.pathname !== '/signup'&& (
-            <Grid2>
+          <Button color="inherit" onClick={toggleDarkMode}>
+          {localStorage.getItem('darkMode') === 'true' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </Button>)}
+          {location.pathname !== '/' && location.pathname !== '/signup'&& (
+            <Grid2 container display='flex' alignContent={'center'}>
             <TextField
             type="text"
             variant="standard"
