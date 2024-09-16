@@ -23,7 +23,7 @@ function AddRecipe () {
     image: null,
     category: '',
     type: '',
-    cookingtime: 0,
+    cookingTime: 0,
     difficulty: ''
   });
 
@@ -74,15 +74,21 @@ function AddRecipe () {
     e.preventDefault();
     const data = new FormData();
     data.append('title', formData.title);
-    data.append('ingredients', JSON.stringify(formData.ingredients.filter(ingredient => ingredient.trim() !== '')));
+    formData.ingredients.filter(ingredient => ingredient.trim() !== '') //per rimuovere eventuali stringhe vuote prima del submit
+    .forEach((ingredient, index) => {
+      data.append(`ingredients[${index}]`, ingredient);
+  });
     data.append('people', formData.people);
-    data.append('steps', JSON.stringify(formData.steps.filter(step => step.trim() !== '')));
+    formData.steps.filter(step => step.trim() !== '') //per rimuovere eventuali stringhe vuote prima del submit
+    .forEach((step, index) => {
+      data.append(`steps[${index}]`, step);
+  });
     if (formData.image) {
       data.append('image', formData.image);
   }
     data.append('category', formData.category);
     data.append('type', formData.type);
-    data.append('cookingtime', formData.cookingtime);
+    data.append('cookingTime', formData.cookingTime);
     data.append('difficulty', formData.difficulty);
 
     //PROVA
@@ -94,7 +100,7 @@ function AddRecipe () {
       image: formData.image,
       category: formData.category,
       type: formData.type,
-      cookingtime: formData.cookingtime,
+      cookingTime: formData.cookingTime,
       difficulty: formData.difficulty
     });
 
@@ -104,6 +110,7 @@ function AddRecipe () {
     }, 1000);
     
     try {
+      console.log('Invio dati in corso...', data);
       const response = await axios.post('http://localhost:5000/home/add', data);
       console.log(response.data);
     } catch (error) {
@@ -193,7 +200,7 @@ function AddRecipe () {
               <Typography variant="body1" style={{ margin: '16px' }}>Tempo necessario per la preparazione:</Typography>
             </Grid2>
             <Grid2 item size={{ xs: 4, md: 8}}>
-              <TextField placeholder="Inserisci numero minuti" name='cookingtime' type='number' variant= "standard" onChange={handleInputChange} style={{width:'90%'}}/>
+              <TextField placeholder="Inserisci numero minuti" name='cookingTime' type='number' variant= "standard" onChange={handleInputChange} style={{width:'90%'}}/>
             </Grid2>
           </Grid2>
 

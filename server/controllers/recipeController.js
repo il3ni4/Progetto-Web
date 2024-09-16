@@ -24,9 +24,9 @@ const getAllRecipes = async (req, res) => {
 
 //getRecipe --> visualizzare singola ricetta 
 const getRecipe = async (req, res) => {
-    const recipeId = req.params.recipeId;
+    const recipeId = req.params.id;
     try {
-        const recipe = await Recipe.findById({ recipeId: recipeId });
+        const recipe = await Recipe.findById({ _id: recipeId });
         res.status(200).json({msg: "ok", recipe: recipe})
     } catch (err) {
         res.status(500).json({msg: "errore nel caricamento della ricetta", errore: err.msg})
@@ -77,9 +77,9 @@ const createRecipe = async (req, res) => {
 
 //deleteRecipe?
 const deleteRecipe = async (req, res) => {
-    const recipeId = req.params.recipeId;
+    const recipeId = req.params.id;
     try {
-        const recipe = await Recipe.findByIdAndDelete({ recipeId: recipeId });
+        const recipe = await Recipe.findByIdAndDelete({ _id: recipeId });
         res.status(200).json({msg: "ok", recipe: recipe})
     } catch (err) {
         res.status(500).json({msg: "errore nell'eliminazione della ricetta", errore: err.msg})

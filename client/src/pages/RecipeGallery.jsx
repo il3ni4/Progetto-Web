@@ -8,6 +8,8 @@ import { useTheme } from '@mui/material/styles';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Link } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router-dom';
+import SearchOffIcon from '@mui/icons-material/SearchOff';
+import YoutubeSearchedForTwoToneIcon from '@mui/icons-material/YoutubeSearchedForTwoTone';
 
 
 function RecipeGallery({ view, setView }) {
@@ -44,6 +46,7 @@ useEffect(() => {
     }
     console.log("Response data:", response.data); 
     setRecipes(response.data.recipes)
+    
   }
   catch (err){
     if (err.status === 401){
@@ -61,7 +64,10 @@ fetchRecipes();
 }, [view, searchQuery, category, type]) // Esegui l'API call ogni volta che cambiano view, query di ricerca, categoria o tipo di ricetta
 
 if (loading) {
-  return <div>Caricamento in corso...</div>; 
+  return <div style={ {display:"flex", flexDirection:"row", justifyContent:"center", alignContent:"center", alignItems: "center"} }>
+          <h3>Caricamento in corso...</h3>
+          <YoutubeSearchedForTwoToneIcon></YoutubeSearchedForTwoToneIcon>
+        </div>; 
 }
 
 
@@ -72,6 +78,10 @@ if (loading) {
           <Cards key={recipe.id} recipe={recipe} setRecipes={setRecipes}></Cards>
         </Grid2>
       ))}
+      {recipes.length === 0 && (<div style={ {display:"flex", flexDirection:"column", justifyContent:"center", alignContent:"center", alignItems: "center"} }>
+    <p>Nessuna ricetta trovata</p>
+    <SearchOffIcon></SearchOffIcon>
+  </div>)}
       {location.pathname === '/home/myRecipes' && (
         <Container>
         <Button variant="contained" color="primary" style={{ position: 'fixed',
