@@ -12,6 +12,8 @@ import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link, useLocation } from 'react-router-dom';
 import { Grid2 } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
+import axios from 'axios';
 
 
 function Navbar ({ setView }) {
@@ -30,6 +32,16 @@ function Navbar ({ setView }) {
     console.log('Stai cercando:', searchQuery);
     setView('searchedRecipes')
   } //chiamata quando l'utente fa click sul pulsante di ricerca, si accede al valore attuale della variabile di stato searchQuery
+
+  const handleLogout = async () => {
+    try {
+      const logout = await axios.post('http://localhost:5000/auth/logout');
+      console.log('Logout effettuato');
+      alert(logout.data.msg);
+      window.location.href = '/';
+    } catch (err) {
+      console.error('Logout failed:', err);
+  }}
 
   const toggleOpen = () => {
       setOpen(!open)
@@ -64,7 +76,7 @@ function Navbar ({ setView }) {
             sx={{backgroundColor: 'white'}}/>
           <Button variant ="contained" color="primary" component={Link} to={`/searchRecipe?title=${searchQuery}`} onClick={handleSearchSubmit}><SearchIcon/></Button>
           </Grid2>)}
-          
+          {location.pathname!== '/' && location.pathname!== '/signup' && (<Button color="inherit" onClick={handleLogout}><LogoutIcon /></Button>)}
           </Toolbar>
         </AppBar>
         <Sidebar isOpen={open} toggleOpen={toggleOpen} setView={setView}/>

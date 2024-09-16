@@ -31,9 +31,12 @@ function Signup () {
                 'Content-Type': 'application/json'
             }
         });
+            window.location.href = '/home/myRecipes' 
             console.log(response.data);
-          } catch (error) {
-            console.error('Login failed prova:', error.response ? error.response.data : error.message);
+          } catch (err) {
+            if (err.status === 400){
+                alert(err.response.data.msg);}
+            console.error('Login failed prova:', err.response ? err.response.data : err.message);
           }
     }
 

@@ -33,7 +33,6 @@ useEffect(() => {
       response = await axios.get(`http://localhost:5000/home/myRecipes`); 
     } else if (view === 'allRecipes') {
       response = await axios.get(`http://localhost:5000/home/explore`); 
-    
     } else if (view === 'category') {
       response = await axios.get(`http://localhost:5000/home/category/${category}`);
     } else if (view === 'savedRecipes') {

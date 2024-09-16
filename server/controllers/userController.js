@@ -52,7 +52,7 @@ const  signUp = async (req, res) => {
         }
         const exsistingUsername = await User.findOne({ username });
         if (exsistingUsername) {
-            return res.status(400).json({msg: "Username già esistente!"})
+            return res.status(400).json({msg: "Username già esistente! Scegline un altro"})
         }
 
         const user = await User.create({ username, email, password })
@@ -156,13 +156,24 @@ const verifyAuth = async (req, res, next) => {
     }
 }
 
+const logout = async (req, res) => {
+    try {
+    const token = req.cookies.jwtToken;
+    res.clearCookie("jwtToken", token, { path: "/" });
+    res.status(200).json({msg: "Utente disconnesso correttamente"})}
+    catch (err){
+        res.status(500).json({msg: "Errore durante la disconnessione"})
+    }
+}
+
 module.exports = {
     saveRecipe,
     getSavedRecipes,
     signUp,
     login, 
     verifyAuth,
-    removeSavedRecipe
+    removeSavedRecipe,
+    logout
 };
 
 

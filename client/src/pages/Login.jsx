@@ -30,8 +30,11 @@ function Login() {
         try {
             const response = await axios.post('http://localhost:5000/auth/login', data);
             console.log(response.data);
-          } catch (error) {
-            console.error('Login failed:', error.response ? error.response.data : error.message);
+            window.location.href = '/home/myRecipes' 
+          } catch (err) {
+            if (err.status === 400){
+                alert(err.response.data.msg);}
+            console.error('Login failed:', err.response ? err.response.data : err.message);
           }
     }
 
@@ -57,4 +60,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Login;
