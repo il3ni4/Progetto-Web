@@ -34,7 +34,7 @@ function AddRecipe () {
         ...formData,
         [e.target.name]: newValue
       });
-};
+  };
 
   const handleIngredientChange = (index, e) => {
     const newIngredients = [...formData.ingredients];
@@ -66,8 +66,23 @@ function AddRecipe () {
     });
   };
 
-  const handleImageChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
+  const conversionBase64 = (img) => {
+    return new Promise((res, rej) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(img);
+      fileReader.onload = () => {
+        res(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        rej(error);
+      };
+  });
+};
+
+  const handleImageChange = async (e) => {
+    const image = e.target.files[0];
+    const base64 = await conversionBase64(image);
+    setFormData({ ...formData, image: base64 });
   };
 
   const handleSubmit = async (e) => {
@@ -83,36 +98,18 @@ function AddRecipe () {
     .forEach((step, index) => {
       data.append(`steps[${index}]`, step);
   });
-    if (formData.image) {
-      data.append('image', formData.image);
-  }
+    data.append('image', formData.image);
     data.append('category', formData.category);
     data.append('type', formData.type);
     data.append('cookingTime', formData.cookingTime);
     data.append('difficulty', formData.difficulty);
-
-    //PROVA
-    console.log("Dati da inviare:", {
-      title: formData.title,
-      ingredients: formData.ingredients,
-      people: formData.people,
-      steps: formData.steps,
-      image: formData.image,
-      category: formData.category,
-      type: formData.type,
-      cookingTime: formData.cookingTime,
-      difficulty: formData.difficulty
-    });
-
-    // Simulazione di una chiamata API con setTimeout
-    setTimeout(() => {
-      alert('Form submission simulated!');
-    }, 1000);
     
     try {
       console.log('Invio dati in corso...', data);
       const response = await axios.post('http://localhost:5000/home/add', data);
-      console.log(response.data);
+      console.log(response.data)
+      alert('Ricetta aggiunta con successo!');
+      window.location.href = '/home/myRecipes'
     } catch (error) {
       console.error('Addrecipe failed:', error.response ? error.response.data : error.message);
     }
@@ -160,7 +157,7 @@ function AddRecipe () {
               <Typography variant="body1" style={{ margin: '16px' }}>Inserisci il numero di step necessario per descrivere il procedimento</Typography>
             </Grid2>
             <Grid2 item fullWidth>
-              <AddTextInput label='step' object={formData.steps} handleChange={handleStepChange} addHandler={addStep}/>
+              <AddTextInput label='Step' object={formData.steps} handleChange={handleStepChange} addHandler={addStep}/>
             </Grid2>
           </Grid2>
 
@@ -170,7 +167,7 @@ function AddRecipe () {
               <Typography variant="body1" style={{ margin: '16px' }}>Carica una foto della tua ricetta:</Typography>
             </Grid2>
             <Grid2 item size={{ xs: 12, md: 6}} style={{textAlign:'center', border: '2px solid #539fec', backgroundColor: '#a4c7eb', borderRadius: '8px', height:'40px'}}>
-              <input type="file" onChange={handleImageChange} style={{alignContent:'center', margin:'10px'}} />
+              <input type="file" label="image" name="image" accept=".jpeg, .png, .jpg" onChange={handleImageChange} style={{alignContent:'center', margin:'10px'}} />
             </Grid2>
           </Grid2>
 

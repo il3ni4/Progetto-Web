@@ -5,10 +5,11 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import FormHelperText from '@mui/material/FormHelperText';
 
 
 function Login() {
-
+    const [error, setError] = useState('');  //stato per gestire errori durante il login
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -33,8 +34,7 @@ function Login() {
             window.location.href = '/home/myRecipes' 
           } catch (err) {
             if (err.status === 400){
-                alert(err.response.data.msg);}
-            console.error('Login failed:', err.response ? err.response.data : err.message);
+            setError(err.response.data.msg);}
           }
     }
 
@@ -50,6 +50,7 @@ function Login() {
             <form onSubmit={handleSubmit}>
             <TextField label ='Username' name='username' placeholder='Inserisci username' value={formData.username} onChange={handleInput} fullWidth required/>
             <TextField label ='Password' name='password' placeholder='Inserisci password' type ='password' value={formData.password} onChange={handleInput} fullWidth required/>
+            {error && (<FormHelperText sx={{ color: 'red' }}>{error}</FormHelperText>)}
             <Button type ='submit' color ='primary' variant= 'contained' style ={{margin : '8 px 0'}} fullWidth>
             Accedi 
             </Button>

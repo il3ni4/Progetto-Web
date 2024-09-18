@@ -8,6 +8,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CircleIcon from '@mui/icons-material/Circle';
+import YoutubeSearchedForTwoToneIcon from '@mui/icons-material/YoutubeSearchedForTwoTone';
 
 
 
@@ -29,28 +30,36 @@ const RecipeCard = () => {
   fetchRecipe();
 }, [id]);
 
-if(!recipe) return <div>Loading...</div>;
+if(!recipe) 
+  return <div style={ {display:"flex", flexDirection:"row", justifyContent:"center", alignContent:"center", alignItems: "center"} }>
+            <h3>Caricamento in corso...</h3>
+            <YoutubeSearchedForTwoToneIcon></YoutubeSearchedForTwoToneIcon>
+          </div>; ;
 
 
 return (
   <Container maxWidth="md" sx={ {mt: 4, mb: 4} }>
     <Card>
-    <CardContent>
+    <CardContent sx={ {mt: 2, mb: 2, ml: 15, mr: 15}}>
       <CardMedia
         component="img"
-        height="500"
         image={recipe.image}
         alt={recipe.title}
         sx={{ objectFit: 'contain',
-              objectPosition: 'left' 
+          objectPosition: 'central',
+          boxShadow: '0 5px 15px rgba(0, 0, 0, 0.45)'
         }}
       />
-      </CardContent>
+    </CardContent>
       
+    <Typography variant="h3" component="div" gutterBottom sx={{ml: 2}}>
+      {recipe.title}
+    </Typography>
+    
 
   <Box sx={{
-        display: 'flex',
-        flexDirection: 'row',
+    display: 'flex',
+    flexDirection: 'row',
         gap: 2,
         padding: 2
       }}>
@@ -66,10 +75,10 @@ return (
           </Typography>
         </Grid2>
         <Grid2 item>
-          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{recipe.cookingTime} minuti</Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{recipe.cookingTime}{recipe.cookingTime > 1 ? " minuti" : " minuto"}</Typography>
         </Grid2>
     </Grid2>
-    </Box>
+  </Box>
 
     <Box sx={{
         display: 'flex',
@@ -88,7 +97,7 @@ return (
           </Typography>
         </Grid2>
         <Grid2 item>
-          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{recipe.people} persone</Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{recipe.people}{recipe.people >1 ? " persone" : " persona"}</Typography>
         </Grid2>
     </Grid2>
     </Box>
@@ -139,12 +148,6 @@ return (
   </Box>
 
       <CardContent>
-        <Typography variant="h3" component="div" gutterBottom>
-          {recipe.title}
-        </Typography>
-        <Typography variant="body1" color="text.secondary" paragraph>
-          {recipe.description}
-        </Typography>
 
         <Divider />
         

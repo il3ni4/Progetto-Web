@@ -66,10 +66,10 @@ function Cards ({ key, recipe, setRecipes }) {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              {location.pathname !== '/savedRecipes'  && (<Button onClick={() => handleSaveRecipe(recipe)} variant="outlined" size="medium">
+              {location.pathname !== '/savedRecipes' && (<Button onClick={() => handleSaveRecipe(recipe)} variant="outlined" size="medium">
                 Salva
               </Button>)}
-              {location.pathname === '/savedRecipes' && (<Button onClick={() => handleRemoveSavedRecipe(recipe._id)} variant="outlined" size="medium">
+              {location.pathname === '/savedRecipes'&& (<Button onClick={() => handleRemoveSavedRecipe(recipe._id)} variant="outlined" size="medium">
                 Rimuovi
               </Button>)}
               {location.pathname === '/home/myRecipes' && (<Button variant="outlined" size="medium" onClick={() => handleDeleteRecipe(recipe._id)}>

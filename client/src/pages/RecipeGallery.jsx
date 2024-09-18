@@ -72,16 +72,19 @@ if (loading) {
 
 
   return (
-    <Grid2 container spacing={5} justifyContent="center" style={{ marginTop: '30px' }}>
+    <>
+      {recipes.length === 0 && (
+        <div style={ {display:"flex", flexDirection:"column", justifyContent:"center", alignContent:"center", alignItems: "center"} }>
+          <h5>Nessuna ricetta trovata</h5>
+          <SearchOffIcon></SearchOffIcon>
+        </div>
+      )}
+    <Grid2  container spacing={5} justifyContent="center" style={{ marginTop: '30px' }}>
       {recipes && recipes.map((recipe, index) => (
         <Grid2 item xs={12} md={4} key={index}>
           <Cards key={recipe.id} recipe={recipe} setRecipes={setRecipes}></Cards>
         </Grid2>
       ))}
-      {recipes.length === 0 && (<div style={ {display:"flex", flexDirection:"column", justifyContent:"center", alignContent:"center", alignItems: "center"} }>
-    <p>Nessuna ricetta trovata</p>
-    <SearchOffIcon></SearchOffIcon>
-  </div>)}
       {location.pathname === '/home/myRecipes' && (
         <Container>
         <Button variant="contained" color="primary" style={{ position: 'fixed',
@@ -96,6 +99,7 @@ if (loading) {
       </Container>
       )}
     </Grid2>
+    </>
   );
 }
 

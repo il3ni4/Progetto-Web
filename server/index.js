@@ -5,13 +5,12 @@ const userRoutes = require("./routes/users");
 const recipeRoutes = require("./routes/recipes");
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
-const fileUpload = require('express-fileupload');
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({limit: '30mb'}));
+app.use(express.urlencoded({limit: '25mb', extended: true}));
 app.use(cookieParser());
-app.use(fileUpload());
 
 app.use(cors({
     origin: 'http://localhost:3000',

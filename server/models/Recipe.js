@@ -15,8 +15,7 @@ const RecipeSchema = new mongoose.Schema({
         type: String, 
         required: true}],
     image: {
-        type: Buffer, 
-        contentType: String},
+        type: String},
     category: {
         type: String, 
         required: true,
