@@ -80,7 +80,7 @@ const  signUp = async (req, res) => {
             return res.status(400).json({ message: messages.join(', ') });
         } else {
             console.log(err);
-            res.json({msg: err.message})}
+            res.status(400).json({msg: err.message})}
     }
 
     

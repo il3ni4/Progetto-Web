@@ -3,8 +3,10 @@ import { Button, Grid2,Paper,Typography} from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import FormHelperText from '@mui/material/FormHelperText'
 
 function Signup () {
+    const [error, setError] = useState('');
     const [formData, setFormData] = useState({
         email: '',
         username: '',
@@ -29,16 +31,16 @@ function Signup () {
             const response = await axios.post('http://localhost:5000/auth/signUp', data, {
                 headers: {
                 'Content-Type': 'application/json'
-            }
-        });
+                 }
+                });
             window.location.href = '/home/myRecipes' 
             console.log(response.data);
           } catch (err) {
             if (err.status === 400){
-                alert(err.response.data.msg);}
-            console.error('Login failed prova:', err.response ? err.response.data : err.message);
+                setError(err.response.data.msg);
           }
     }
+}
 
     return (
         <Grid2 container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
@@ -56,6 +58,7 @@ function Signup () {
                     <TextField fullWidth label='Email' name='email' placeholder='Inserisci email' type ='email' value={formData.email} required onChange={handleInput}/>
                     <TextField fullWidth label='Username' name='username' placeholder='Inserisci username' value={formData.username} required onChange={handleInput}/>
                     <TextField fullWidth label='Password' name='password' placeholder='Inserisci password' type ='password' value={formData.password} required onChange={handleInput}/>
+                    {error && (<FormHelperText sx={{ color: 'red' }}>{error}</FormHelperText>)}
                     <Button type="submit" variant="contained" color ="primary" fullWidth>
                     Registrati
                     </Button>
@@ -68,4 +71,4 @@ function Signup () {
     )
 }
 
-export default Signup
+export default Signup;
