@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "client": "npm start --prefix client",
-    "server": "npm start --prefix server"
+    "server": "npm start --prefix server",
+    "build": "cd client && npm run build"
   }
 }
