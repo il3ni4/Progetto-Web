@@ -22,7 +22,7 @@ function App() {
 
     useEffect(() => {
       // Fetch data from the Express server
-      axios.get('http://localhost:5000/')
+      axios.get(`${baseURL}`)
         .then(response => setMessage(response.data))
         .catch(error => console.error('errore: ' + error));
     }, []);

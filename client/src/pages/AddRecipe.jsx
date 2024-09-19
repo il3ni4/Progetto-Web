@@ -106,7 +106,7 @@ function AddRecipe () {
     
     try {
       console.log('Invio dati in corso...', data);
-      const response = await axios.post('http://localhost:5000/home/add', data);
+      const response = await axios.post(`${baseURL}home/add`, data);
       console.log(response.data)
       alert('Ricetta aggiunta con successo!');
       window.location.href = '/home/myRecipes'

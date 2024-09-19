@@ -52,7 +52,7 @@ function Navbar ({ setView, toggleDarkMode }) {
 
   const handleLogout = async () => {
     try {
-      const logout = await axios.post('http://localhost:5000/auth/logout');
+      const logout = await axios.post(`${baseURL}auth/logout`);
       console.log('Logout effettuato');
       alert(logout.data.msg);
       window.location.href = '/';

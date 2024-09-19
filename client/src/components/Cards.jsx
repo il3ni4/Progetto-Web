@@ -4,6 +4,7 @@ import {Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, B
 import axios from 'axios'
 import {Link} from'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
+const baseURL = process.env.baseURL;
 
 
 function Cards ({ key, recipe, setRecipes }) {
@@ -14,7 +15,7 @@ function Cards ({ key, recipe, setRecipes }) {
   const handleSaveRecipe = async (recipe) => {
     try{
       console.log("Salvataggio della ricetta: ", recipe);
-      const added = await axios.post('http://localhost:5000/auth/saveRecipe', recipe)
+      const added = await axios.post(`${baseURL}auth/saveRecipe`, recipe)
       setSavedRecipes([...savedRecipes, added.data.user.favorites]);
       // console.log("saved recipes : ", saved);
     }
@@ -25,7 +26,7 @@ function Cards ({ key, recipe, setRecipes }) {
 
   const handleRemoveSavedRecipe = async (recipeId) => {
     try{
-      const userUpdated = await axios.delete(`http://localhost:5000/auth/delete/${recipeId}`);
+      const userUpdated = await axios.delete(`${baseURL}auth/delete/${recipeId}`);
       console.log("Ricetta rimossa dalle preferite: ", userUpdated.data);
       setRecipes((prevRecipes) => prevRecipes.filter((recipe) => recipe._id !== recipeId)); //senza effettuare nuovamente una chiamata API, si può utilizzare lo state recipes per aggiornare direttamente la lista delle ricette salvate da visualizzare
     }
@@ -36,7 +37,7 @@ function Cards ({ key, recipe, setRecipes }) {
 
   const handleDeleteRecipe = async (recipeId) => {
     try{
-      const deleted = await axios.delete(`http://localhost:5000/home/recipe/${recipeId}`);
+      const deleted = await axios.delete(`${baseURL}home/recipe/${recipeId}`);
       alert("Ricetta eliminata con successo");
       setRecipes((prevRecipes) => prevRecipes.filter((recipe) => recipe._id !== recipeId));
     } 

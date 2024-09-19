@@ -32,17 +32,17 @@ useEffect(() => {
   try{
     let response;
     if (view === 'myRecipes') {
-      response = await axios.get(`http://localhost:5000/home/myRecipes`); 
+      response = await axios.get(`${baseURL}home/myRecipes`); 
     } else if (view === 'allRecipes') {
-      response = await axios.get(`http://localhost:5000/home/explore`); 
+      response = await axios.get(`${baseURL}home/explore`); 
     } else if (view === 'category') {
-      response = await axios.get(`http://localhost:5000/home/category/${category}`);
+      response = await axios.get(`${baseURL}home/category/${category}`);
     } else if (view === 'savedRecipes') {
-      response = await axios.get(`http://localhost:5000/home/saved`); 
+      response = await axios.get(`${baseURL}home/saved`); 
     } else if (view === 'type') {
-      response = await axios.get(`http://localhost:5000/home/type/${type}`)
+      response = await axios.get(`${baseURL}home/type/${type}`)
     } else if (view === 'searchedRecipes') {
-      response = await axios.get(`http://localhost:5000/home/search?title=${searchQuery}`)
+      response = await axios.get(`${baseURL}home/search?title=${searchQuery}`)
     }
     console.log("Response data:", response.data); 
     setRecipes(response.data.recipes)
