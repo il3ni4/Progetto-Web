@@ -11,7 +11,8 @@ function AddTextInput ({ label, object, handleChange, addHandler }) {
             value={value}
             onChange={(e) => handleChange(index, e)}
             fullWidth
-            multiline
+            multiline //per disporre il testo su più righe
+            maxRows='5' //verranno visualizzate massimo 5 righe, dopodiché si scrolla per leggere tutto il contenuto
           />
         </Grid2>
       ))}
