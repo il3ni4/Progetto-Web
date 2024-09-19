@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import FormHelperText from '@mui/material/FormHelperText';
-
+const baseURL = process.env.baseURL;
 
 function Login() {
     const [error, setError] = useState('');  //stato per gestire errori durante il login

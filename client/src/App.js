@@ -10,7 +10,7 @@ import RecipeCard from './pages/RecipeCard';
 import useDarkMode from './components/useDarkMode'
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material';
-
+const baseURL = process.env.baseURL;
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Content-Type'] = 'application/json'; 

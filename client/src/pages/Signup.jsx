@@ -4,6 +4,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import FormHelperText from '@mui/material/FormHelperText'
+const baseURL = process.env.baseURL;
 
 function Signup () {
     const [error, setError] = useState('');

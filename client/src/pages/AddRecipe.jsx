@@ -8,6 +8,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Grid2 } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
+const baseURL = process.env.baseURL;
 
 const categories = ['Vegetariano', 'Vegano', 'Carne', 'Pesce'];
 const types = ['Antipasti', 'Primi', 'Secondi', 'Lievitati', 'Dolci'];

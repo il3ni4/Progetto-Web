@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router-dom';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 import YoutubeSearchedForTwoToneIcon from '@mui/icons-material/YoutubeSearchedForTwoTone';
-
+const baseURL = process.env.baseURL;
 
 function RecipeGallery({ view, setView }) {
   const [recipes, setRecipes] = useState([]);

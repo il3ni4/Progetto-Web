@@ -18,7 +18,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useTheme, useMediaQuery } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-
+const baseURL = process.env.baseURL;
 
 function Navbar ({ setView, toggleDarkMode }) {
   const location = useLocation();

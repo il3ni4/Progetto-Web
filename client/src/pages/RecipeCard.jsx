@@ -9,7 +9,7 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CircleIcon from '@mui/icons-material/Circle';
 import YoutubeSearchedForTwoToneIcon from '@mui/icons-material/YoutubeSearchedForTwoTone';
-
+const baseURL = process.env.baseURL;
 
 
 const RecipeCard = () => {
