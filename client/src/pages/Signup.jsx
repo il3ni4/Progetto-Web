@@ -29,7 +29,7 @@ function Signup () {
         data.append('password', formData.password);
 
         try {
-            const response = await axios.post(`${baseURL}auth/signUp`, data, {
+            const response = await axios.post(`${baseURL}/auth/signUp`, data, {
                 headers: {
                 'Content-Type': 'application/json'
                  }

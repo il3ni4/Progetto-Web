@@ -20,7 +20,7 @@ const RecipeCard = () => {
     const fetchRecipe = async () => {
       try{
         console.log(id);
-        const response = await axios.get(`${baseURL}home/recipe/${id}`);
+        const response = await axios.get(`${baseURL}/home/recipe/${id}`);
       console.log("Response data:", response.data);
       setRecipe(response.data.recipe);
     }catch (err){

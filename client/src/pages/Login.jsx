@@ -29,7 +29,7 @@ function Login() {
         data.append('password', formData.password);
 
         try {
-            const response = await axios.post(`${baseURL}auth/login`, data);
+            const response = await axios.post(`${baseURL}/auth/login`, data);
             console.log(response.data);
             window.location.href = '/home/myRecipes' 
           } catch (err) {
